@@ -12,8 +12,6 @@ public class GeminiResponseService {
     //Access APIs and URL from local environment
     @Value("${gemini.api.url}")
     private String geminiApiUrl;
-    @Value("${gemini.api.key}")
-    private String geminiApiKey;
 
     private final WebClient webClient;
 
@@ -40,7 +38,7 @@ public class GeminiResponseService {
 
         //Make API call
         QuestionAnswerPOJo response = webClient.post()
-                .uri(geminiApiUrl + geminiApiKey)
+                .uri(geminiApiUrl)
                 .header("Content-Type" , "application/json")
                 .bodyValue(requestBody)
                 .retrieve() //Retrieve execute the request and expect a response
@@ -88,7 +86,7 @@ public class GeminiResponseService {
 
         //Make API call
         QuestionAnswerPOJo response = webClient.post()
-                .uri(geminiApiUrl + geminiApiKey)
+                .uri(geminiApiUrl)
                 .header("Content-Type" , "application/json")
                 .bodyValue(requestBody)
                 .retrieve() //Retrieve execute the request and expect a response

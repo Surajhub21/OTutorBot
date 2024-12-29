@@ -3,9 +3,10 @@ package com.developersuraj.OTutorBot.controller;
 import com.developersuraj.OTutorBot.entity.Users;
 import com.developersuraj.OTutorBot.service.NewUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,15 +18,13 @@ public class UserEntityController {
     private NewUserService userService;
 
     //Create/Store Chat with AI
-    @GetMapping
-    public Users userDataGet(){
+    @GetMapping("{userEmail}")
+    public ResponseEntity<Users> userDataGet(@PathVariable String userEmail){
 
-        // Retrieve the currently authenticated user's details
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        // Retrieve the user's details
+        Users user = userService.findByUserEmail(userEmail);
 
-        String userEmail = authentication.getName(); // Get the username of the authenticated user
-
-        return userService.findByUserEmail(userEmail);
+        return new ResponseEntity<>(user , HttpStatus.OK);
 
     }
 }
