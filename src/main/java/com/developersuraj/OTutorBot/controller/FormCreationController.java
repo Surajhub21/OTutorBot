@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/form")
+@RequestMapping("/user/form")
 public class FormCreationController {
 
     @Autowired
@@ -37,7 +37,7 @@ public class FormCreationController {
             String question = payload.get("question");
             //Getting Answer
             QuestionAnswerPOJo answer = geminiResponseService.getAnswer(question, 5);
-            //Return the answer
+
             getTheQuestions = answer.candidates.get(0).content.parts.get(0).text;
 
             String data = getTheQuestions.replace("```json", "").replace("```", "")

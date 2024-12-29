@@ -14,7 +14,7 @@ import java.util.Map;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/ai")
+@RequestMapping("/user/ai")
 public class GeminiAIController {
 
     private final GeminiResponseService geminiResponseService;
