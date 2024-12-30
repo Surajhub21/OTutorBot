@@ -10,7 +10,7 @@ public class HomePage {
 
     @GetMapping("/")
     public String login(){
-        return "home";
+        return "login";
     }
 
     @GetMapping("/user")
