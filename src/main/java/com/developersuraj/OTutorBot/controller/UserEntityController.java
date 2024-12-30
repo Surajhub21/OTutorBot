@@ -19,12 +19,12 @@ public class UserEntityController {
 
     //Create/Store Chat with AI
     @GetMapping("{userEmail}")
-    public ResponseEntity<Users> userDataGet(@PathVariable String userEmail){
+    public String userDataGet(@PathVariable String userEmail){
 
         // Retrieve the user's details
         Users user = userService.findByUserEmail(userEmail);
 
-        return new ResponseEntity<>(user , HttpStatus.OK);
+        return "UserName :- "+user.getUserName();
 
     }
 }

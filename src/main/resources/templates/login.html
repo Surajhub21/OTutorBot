@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <script>
+        // Function to handle the login form submission
+        function handleLogin() {
+            const userEmail = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            // Send POST request to the backend API
+            fetch("/req/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    userEmail: userEmail,
+                    password: password,
+                }),
+            })
+            .then(response => {
+                if (response.ok) {
+                    // If login is successful, redirect to the dashboard or another endpoint
+                    localStorage.setItem('userEmail', userEmail);
+                    window.location.href = "/user"; // Change URL to your desired endpoint
+                } else {
+                    // If login fails, display an error message
+                    alert("Invalid credentials. Please try again.");
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                alert("An error occurred. Please try again later.");
+            });
+        }
+    </script>
+</head>
+<body>
+
+<h2>Login</h2>
+<form onsubmit="event.preventDefault(); handleLogin();">
+  <label for="email">Email:</label><br>
+  <input type="text" id="email" name="email" required><br><br>
+
+  <label for="password">Password:</label><br>
+  <input type="test" id="password" name="password" required><br><br>
+
+  <button type="submit">Login</button>
+</form>
+
+</body>
+</html>

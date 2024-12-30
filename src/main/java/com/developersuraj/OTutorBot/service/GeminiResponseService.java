@@ -52,34 +52,24 @@ public class GeminiResponseService {
     public QuestionAnswerPOJo getAnswer(String question , int noOfQuestion){
 
         String format = "{\n" +
-                "\n" +
-                "  \"topic\": \"\",\n" +
-                "\n" +
-                "  \"questions\": [\n" +
-                "\n" +
-                "    {\n" +
-                "\n" +
-                "      \"text\": \"question1\",\n" +
-                "\n" +
-                "      \"choices\": [\"option a\", \"option b\", \"op c\", \"opiton d\"]\n" +
-                "\n" +
-                "    },\n" +
-                "\n" +
-                "    {\n" +
-                "\n" +
-                "      \"text\": \"Question 2\",\n" +
-                "\n" +
-                "      \"choices\": [\"options\", \"option b\", \"option c\", \"option d\"]\n" +
-                "    }\n" +
-                "\n" +
-                "  ]\n" +
-                "\n" +
+                "  \"topic\": \"topic_name\",\n" +
+                "  \"questions\": [\n" +
+                "    {\n" +
+                "      \"text\": \"question 1\",\n" +
+                "      \"choices\": [\"option 1\", \"option2\", \"option3\", \"ooption4\"]\n" +
+                "    },\n" +
+                "    {\n" +
+                "      \"text\": \"question 2\",\n" +
+                "      \"choices\": [\"option 1\", \"option 2\", \"option 3\", \"option 4\"]\n" +
+                "    }\n" +
+                "  ],\n" +
+                "  \"correctAnswers\": [\"answer of question 1\", \"answer of question 2\"]\n" +
                 "}";
 
         Map<String , Object> requestBody = Map.of(
                 "contents" , new Object[] {
                         Map.of("parts" , new Object[]{
-                                Map.of("text" , "give me "+noOfQuestion+" questions on topic " +question+" in this format"+format)
+                                Map.of("text" , "give me "+noOfQuestion+" questions on topic " +question+" in this format"+format +"correctAnswers it contain all answer of above questions.")
                         })
                 }
         );

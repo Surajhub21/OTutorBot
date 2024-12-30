@@ -32,13 +32,14 @@ public class FormCreationController {
         //Ask Ai for the questions
         String getTheQuestions = "";
         QuestionPOJO questionPOJO;
+
         try {
             //get Question
             String question = payload.get("question");
             //Getting Answer
-            QuestionAnswerPOJo answer = geminiResponseService.getAnswer(question, 5);
+            QuestionAnswerPOJo answer = geminiResponseService.getAnswer(question, 25);
 
-            getTheQuestions = answer.candidates.get(0).content.parts.get(0).text;
+            getTheQuestions = answer.candidates.get(0).content.parts.get(0).text; //get as a string
 
             String data = getTheQuestions.replace("```json", "").replace("```", "")
                     .replace("\n", "")  // Remove newline characters if needed
@@ -49,6 +50,7 @@ public class FormCreationController {
         } catch (Exception e) {
             return new ResponseEntity<>("Error occur duo to " + e, HttpStatus.BAD_REQUEST);
         }
+
         //Now Create Form using the questions you receive
         try {
             MessageResponseFromScript response = formCreationService.getFormURL(questionPOJO);
