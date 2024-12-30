@@ -26,7 +26,7 @@ public class FormCreationController {
     public StringToQuestionPOJOService pojoConverterService;
 
     @PostMapping
-    public ResponseEntity<String> createFormL(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<MessageResponseFromScript> createFormL(@RequestBody Map<String, String> payload) {
         //Ask Ai for the questions
         String getTheQuestions = "";
         QuestionPOJO questionPOJO;
@@ -46,15 +46,18 @@ public class FormCreationController {
             questionPOJO = pojoConverterService.convertJsonToPojo(data);
 
         } catch (Exception e) {
-            return new ResponseEntity<>("Error occur duo to " + e, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
 
         //Now Create Form using the questions you receive
         try {
+
             MessageResponseFromScript response = formCreationService.getFormURL(questionPOJO);
-            return new ResponseEntity<>(response.getFormUrl(), HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
         } catch (Exception e) {
-            return new ResponseEntity<>("Error occur duo to :- " + e, HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(null , HttpStatus.NOT_FOUND);
         }
 
     }

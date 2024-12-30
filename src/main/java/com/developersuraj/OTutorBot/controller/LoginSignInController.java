@@ -29,6 +29,7 @@ public class LoginSignInController {
             return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
 
         }
+
         if(userService.saveNewEntity(users)){
 
             return new ResponseEntity<>(users , HttpStatus.OK);
@@ -42,22 +43,22 @@ public class LoginSignInController {
 
     }
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String , String> payload){
+    public ResponseEntity<Users> loginUser(@RequestBody Map<String , String> payload){
 
         Users users1 = userService.findByUserEmail(payload.get("userEmail"));
 
         if(users1 != null) {
             if (passwordEncoder.matches(payload.get("password") , users1.getPassword())) {
 
-                return new ResponseEntity<>(users1.getUserName() , HttpStatus.OK);
+                return new ResponseEntity<>(users1 , HttpStatus.OK);
 
             }else {
-                return new ResponseEntity<>("Password Not matched", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
             }
         }
         else {
 
-            return new ResponseEntity<>("User Not Exists!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null , HttpStatus.NOT_FOUND);
 
         }
 

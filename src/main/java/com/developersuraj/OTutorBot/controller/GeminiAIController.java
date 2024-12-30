@@ -23,7 +23,7 @@ public class GeminiAIController {
     private final ChatService chatService;
 
     @PostMapping("/ask")
-    public ResponseEntity<String> askQuestion(@RequestBody Map<String , String> payload){
+    public ResponseEntity<ChatEntity> askQuestion(@RequestBody Map<String , String> payload){
 
         try{
             //get Question
@@ -31,19 +31,21 @@ public class GeminiAIController {
             String userEmail = payload.get("userEmail");
             //Getting Answer
             QuestionAnswerPOJo answer = geminiResponseService.getAnswer(question);
+            ChatEntity chat = new ChatEntity();
 
             if(question != null && answer != null){
-                ChatEntity chat = new ChatEntity();
+
                 chat.setQuestion(question);
                 chat.setResponse(answer.candidates.get(0).content.parts.get(0).text);
                 chatService.saveData(chat , userEmail);
             }
             //Return the answer
-            return new ResponseEntity<>(answer.candidates.get(0).content.parts.get(0).text , HttpStatus.OK);
+            return new ResponseEntity<>(chat , HttpStatus.OK);
         }
         catch (Exception e){
 
-            return new ResponseEntity<>("Error occur duo to " + e , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
+
         }
     }
 }

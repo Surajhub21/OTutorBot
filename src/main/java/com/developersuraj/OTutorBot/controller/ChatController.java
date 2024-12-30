@@ -29,7 +29,9 @@ public class ChatController {
         List<ChatEntity> allChats = user.getChatEntities();
 
         if (allChats != null) {
+
             return new ResponseEntity<>(allChats, HttpStatus.OK);
+
         }
 
         return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
