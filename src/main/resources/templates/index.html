@@ -86,13 +86,19 @@
                 <small>Body: {userEmail, userName, password} - Signs up a new user.</small>
             </li>
             <li><strong>/user</strong> - GET request<br>
-                <small>Parameter: user/{userEmail} - Retrieves user details by email.</small>
+                <small>header: user/{userEmail} - Retrieves user details by email.</small>
             </li>
             <li><strong>/ai/ask</strong> - POST request<br>
                 <small>Body: {question} - Asks a question to the AI and receives an answer.</small>
             </li>
             <li><strong>/form</strong> - POST request<br>
                 <small>Body: {question} - Provides a form with 25 questions on the given topic.</small>
+            </li>
+            <li><strong>/chats</strong> - POST request<br>
+                <small>Header: {userEmail} - Provides all the chats that the user query with AI.</small>
+            </li>
+            <li><strong>Other Functionality</strong> - functions<br>
+                <small>When user give the exam in google form which is created using /form this endpoint.<br>After giving the answers when user submit the form they get a Email about the score of their exam.<br>Also on 12PM every day they have another Email about the all exams they're done.</small>
             </li>
         </ul>
     </article>
