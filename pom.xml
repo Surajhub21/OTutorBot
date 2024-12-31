@@ -28,6 +28,9 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<!--		SonarQube User Tokan-->
+		<sonar.login>squ_da8c4a232c703d2e4578009e4e7ed1c2b548dd87</sonar.login>
+
 	</properties>
 	<dependencies>
 		<dependency>

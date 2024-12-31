@@ -15,7 +15,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/form")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class FormCreationController {
 
     @Autowired

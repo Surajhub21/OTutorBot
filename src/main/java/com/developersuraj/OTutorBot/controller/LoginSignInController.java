@@ -13,7 +13,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/req")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class LoginSignInController {
 
     @Autowired

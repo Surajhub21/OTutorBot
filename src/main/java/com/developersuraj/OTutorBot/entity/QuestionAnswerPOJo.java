@@ -3,13 +3,13 @@ package com.developersuraj.OTutorBot.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 public class QuestionAnswerPOJo {
 
-    public ArrayList<Candidate> candidates;
+    public List<Candidate> candidates;
 
     @Getter
     @Setter
@@ -22,7 +22,7 @@ public class QuestionAnswerPOJo {
     @Getter
     @Setter
     public static class Content{
-        public ArrayList<Part> parts;
+        public List<Part> parts;
         public String role;
     }
 

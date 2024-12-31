@@ -7,7 +7,6 @@ import com.developersuraj.OTutorBot.service.ChatService;
 import com.developersuraj.OTutorBot.service.GeminiResponseService;
 import com.developersuraj.OTutorBot.service.NewUserService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/ai")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class GeminiAIController {
 
     private final GeminiResponseService geminiResponseService;
