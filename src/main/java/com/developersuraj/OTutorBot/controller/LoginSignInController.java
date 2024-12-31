@@ -26,7 +26,7 @@ public class LoginSignInController {
 
         if(userService.findByUserEmail(users.getUserEmail()) != null){
 
-            return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null , HttpStatus.NOT_ACCEPTABLE);
 
         }
 
