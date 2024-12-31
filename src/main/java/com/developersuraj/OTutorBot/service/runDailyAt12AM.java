@@ -7,18 +7,18 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
 @Slf4j
-public class RunDailyAt12PM {
+public class runDailyAt12AM {
 
     @Value("${GOOGLE_SCRIPT_FOR12PM}")
     private String googleScriptURL;
 
     public final WebClient webClient;
 
-    public RunDailyAt12PM(WebClient.Builder webClient) {
+    public runDailyAt12AM(WebClient.Builder webClient) {
         this.webClient = webClient.build();
     }
 
-    public void runAt12PM(){
+    public void runAt12AM(){
         try {
 
             webClient.get()
