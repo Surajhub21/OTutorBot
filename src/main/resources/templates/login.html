@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login Page</title>
+  <style>
+    /* General styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .login-container {
+      background: #1e1e1e;
+      border-radius: 12px;
+      padding: 2rem;
+      width: 100%;
+      max-width: 400px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.6);
+      text-align: center;
+    }
+
+    .login-container h2 {
+      margin-bottom: 1.5rem;
+      color: #ffffff;
+      font-size: 2rem;
+    }
+
+    .login-container label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+      color: #cccccc;
+    }
+
+    .login-container input[type="text"],
+    .login-container input[type="password"] {
+      width: 90%;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #2a2a2a;
+      border: 1px solid #444444;
+      border-radius: 8px;
+      font-size: 1rem;
+      color: #ffffff;
+    }
+
+    .login-container input::placeholder {
+      color: #888888;
+    }
+
+    .login-container button {
+      background: linear-gradient(45deg, #ff5722, #e91e63);
+      color: #ffffff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    .login-container button:hover {
+      background: linear-gradient(45deg, #e91e63, #ff5722);
+      transform: scale(1.05);
+    }
+
+    .login-container button:focus {
+      outline: none;
+      box-shadow: 0px 0px 6px rgba(255, 87, 34, 0.6);
+    }
+
+    .login-container input:focus {
+      outline: none;
+      border-color: #ff5722;
+      box-shadow: 0px 0px 6px rgba(255, 87, 34, 0.6);
+    }
+
+    /* Add subtle animations */
+    .login-container {
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+  </style>
+  <script>
+    // Function to handle the login form submission
+    function handleLogin() {
+      const userEmail = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      // Send POST request to the backend API
+      fetch("/req/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userEmail: userEmail,
+          password: password,
+        }),
+      })
+        .then((response) => {
+          if (response.ok) {
+            // If login is successful, redirect to the dashboard or another endpoint
+            localStorage.setItem("userEmail", userEmail);
+            window.location.href = "/user"; // Change URL to your desired endpoint
+          } else {
+            // If login fails, display an error message
+            alert("Invalid credentials. Please try again.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("An error occurred. Please try again later.");
+        });
+    }
+  </script>
+</head>
+<body>
+<div class="login-container">
+  <h2>Login</h2>
+  <form onsubmit="event.preventDefault(); handleLogin();">
+    <label for="email">Email:</label>
+    <input type="text" id="email" name="email" placeholder="Enter your email" required>
+
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+
+    <button type="submit">Login</button>
+  </form>
+</div>
+</body>
+</html>
