@@ -21,20 +21,19 @@ public class NewUserService {
     private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public boolean saveNewEntity(Users user){
-
         try {
-
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(user);
             return true;
-
         }catch (Exception e){
 
             log.info("Error occur while creating user "+e);
             return false;
         }
 
-
+    }
+    public void saveEntity(Users user){
+        userRepository.save(user);
     }
 
     public List<Users> getAll(){

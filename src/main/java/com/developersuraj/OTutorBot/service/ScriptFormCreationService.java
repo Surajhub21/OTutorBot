@@ -12,10 +12,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Service
 public class ScriptFormCreationService {
 
-    @Value("${console.google.access.token}")
+    @Value("${console_google_access_token}")
     public String accessToken;
 
-    @Value("${google.app.script.url}")
+    @Value("${google_app_script_url}")
     public String scriptURL;
 
     public final WebClient webClient;

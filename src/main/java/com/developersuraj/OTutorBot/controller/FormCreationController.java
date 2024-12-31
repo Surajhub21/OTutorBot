@@ -9,15 +9,13 @@ import com.developersuraj.OTutorBot.service.StringToQuestionPOJOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
-@RequestMapping("/user/form")
+@RequestMapping("/form")
+@CrossOrigin(origins = "http://localhost:5173")
 public class FormCreationController {
 
     @Autowired
@@ -28,17 +26,18 @@ public class FormCreationController {
     public StringToQuestionPOJOService pojoConverterService;
 
     @PostMapping
-    public ResponseEntity<String> createFormL(@RequestBody Map<String, String> payload) {
+    public ResponseEntity<MessageResponseFromScript> createFormL(@RequestBody Map<String, String> payload) {
         //Ask Ai for the questions
         String getTheQuestions = "";
         QuestionPOJO questionPOJO;
+
         try {
             //get Question
             String question = payload.get("question");
             //Getting Answer
-            QuestionAnswerPOJo answer = geminiResponseService.getAnswer(question, 5);
+            QuestionAnswerPOJo answer = geminiResponseService.getAnswer(question, 25);
 
-            getTheQuestions = answer.candidates.get(0).content.parts.get(0).text;
+            getTheQuestions = answer.candidates.get(0).content.parts.get(0).text; //get as a string
 
             String data = getTheQuestions.replace("```json", "").replace("```", "")
                     .replace("\n", "")  // Remove newline characters if needed
@@ -47,14 +46,18 @@ public class FormCreationController {
             questionPOJO = pojoConverterService.convertJsonToPojo(data);
 
         } catch (Exception e) {
-            return new ResponseEntity<>("Error occur duo to " + e, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
         }
+
         //Now Create Form using the questions you receive
         try {
+
             MessageResponseFromScript response = formCreationService.getFormURL(questionPOJO);
-            return new ResponseEntity<>(response.getFormUrl(), HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
         } catch (Exception e) {
-            return new ResponseEntity<>("Error occur duo to :- " + e, HttpStatus.NOT_FOUND);
+
+            return new ResponseEntity<>(null , HttpStatus.NOT_FOUND);
         }
 
     }

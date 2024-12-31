@@ -13,7 +13,7 @@ public class QuestionPOJO {
 
     private String topic;
     private List<Question> questions;
-
+    private List<String> correctAnswers;
     @Getter
     @Setter
     public static class Question {

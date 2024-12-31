@@ -7,15 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
 @RequestMapping("/req")
+@CrossOrigin(origins = "http://localhost:5173")
 public class LoginSignInController {
 
     @Autowired
@@ -31,6 +29,7 @@ public class LoginSignInController {
             return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
 
         }
+
         if(userService.saveNewEntity(users)){
 
             return new ResponseEntity<>(users , HttpStatus.OK);
@@ -44,25 +43,31 @@ public class LoginSignInController {
 
     }
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody Map<String , String> payload){
+    public ResponseEntity<Users> loginUser(@RequestBody Map<String , String> payload){
 
         Users users1 = userService.findByUserEmail(payload.get("userEmail"));
 
         if(users1 != null) {
             if (passwordEncoder.matches(payload.get("password") , users1.getPassword())) {
 
-                return new ResponseEntity<>(users1.getUserName() , HttpStatus.OK);
+                return new ResponseEntity<>(users1 , HttpStatus.OK);
 
             }else {
-                return new ResponseEntity<>("Password Not matched", HttpStatus.BAD_REQUEST);
+                return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
             }
         }
         else {
 
-            return new ResponseEntity<>("User Not Exists!", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(null , HttpStatus.NOT_FOUND);
 
         }
 
+    }
+
+
+    @GetMapping("/txt")
+    public String connected(){
+        return "Connected User";
     }
 
 

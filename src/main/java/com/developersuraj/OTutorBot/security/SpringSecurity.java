@@ -26,10 +26,16 @@ public class SpringSecurity {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user/**").authenticated()
-                        .anyRequest().permitAll()
+                        .requestMatchers("/req/login" , "/req/signup").permitAll() // Allow access to login and register pages
+                        .requestMatchers("/user/**").permitAll()// Protect user endpoints
+                        .anyRequest().permitAll() // Permit other requests if needed
                 )
                 .csrf(csrf -> csrf.disable()) // Disable CSRF if not needed, adjust for your use case
+                .formLogin(form -> form
+                        .loginPage("/") // Custom login page
+                        .defaultSuccessUrl("/user", true) // Redirect to /user on successful login
+                        .permitAll()
+                )
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED) // Use sessions if needed
                 );
