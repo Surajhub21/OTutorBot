@@ -26,7 +26,7 @@ public class GeminiAIController {
     private final NewUserService userService;
 
     @PostMapping("/ask")
-    public ResponseEntity<ChatEntity> askQuestion(@RequestBody Map<String , String> payload){
+    public ResponseEntity<?> askQuestion(@RequestBody Map<String , String> payload){
 
         try{
             //get Question
@@ -54,7 +54,7 @@ public class GeminiAIController {
         }
         catch (Exception e){
 
-            return new ResponseEntity<>(null , HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Error while :-  " +e , HttpStatus.BAD_REQUEST);
 
         }
     }
